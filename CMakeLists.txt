@@ -32,6 +32,7 @@ set(CXXFLAGS_O0 "-O0")
 set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone")
 set(CXXFLAGS_SSE2 "-O3 -march=native")
 set(CXXFLAGS_AVX2 "-O3 -march=native -mavx2")
+set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512vl")
 
 ### Output
 # Set the output directory for the .so
@@ -45,7 +46,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # Option to choose DataType usage
 set(ATA_TYPE "auto" CACHE STRING "DataType chosen")
-set_property(CACHE ATA_TYPE PROPERTY STRINGS auto 128 256)
+set_property(CACHE ATA_TYPE PROPERTY STRINGS auto 128 256 512)
 message(STATUS "DataType chosen: ${ATA_TYPE}")
 
 ### Build
@@ -74,6 +75,15 @@ elseif ("${ATA_TYPE}" MATCHES "256")
     set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX2})
 
     target_compile_definitions(DistanceMeasureFactory PRIVATE _256)
+    target_link_libraries(DistanceMeasureFactory distance)
+
+
+elseif ("${ATA_TYPE}" MATCHES "512")
+
+    add_library(distance SHARED distance-measure/__m512d__distance.cpp distance-measure/__m512d__distance.hpp distance-measure/distance_measure.hpp)
+    set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
+
+    target_compile_definitions(DistanceMeasureFactory PRIVATE _512)
     target_link_libraries(DistanceMeasureFactory distance)
 
 else()

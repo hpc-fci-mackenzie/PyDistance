@@ -9,6 +9,9 @@
 #elif defined(_256)
 #include "../../distance-measure/__m256d__distance.hpp"
 #define METHOD __m256d__Distance
+#elif defined(_512)
+#include "../../distance-measure/__m512d__distance.hpp"
+#define METHOD __m512d__Distance
 #else
 #include "../../distance-measure/baseline_distance.hpp"
 #define METHOD BaselineDistance
