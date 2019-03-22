@@ -24,6 +24,7 @@ cmake-build-release/
 cmake-build-default/
 CMakeFiles/
 build/
+compile_commands.json
 
 # Libraries and objects binaries
 *.o
@@ -32,6 +33,7 @@ build/
 python/.idea
 python/venv
 python/*.so
+python/__pycache__/*
 
 # Mongo Explorer plugin:
 .idea/**/mongoSettings.xml
