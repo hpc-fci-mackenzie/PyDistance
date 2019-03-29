@@ -80,6 +80,13 @@ elseif ("${ATA_TYPE}" MATCHES "256")
 
 elseif ("${ATA_TYPE}" MATCHES "512")
 
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        # require at least gcc 7
+        if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
+            message(FATAL_ERROR "GCC version must be at least 7.0!")
+        endif()
+    endif()
+
     add_library(distance SHARED distance-measure/__m512d__distance.cpp distance-measure/__m512d__distance.hpp distance-measure/distance_measure.hpp)
     set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
 
