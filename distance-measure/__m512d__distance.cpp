@@ -1,3 +1,4 @@
+
 #include "__m512d__distance.hpp"
 
 double
@@ -6,15 +7,15 @@ __m512d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 	double result = 0;
 	__m512d euclidean = _mm512_setzero_pd();
 
-	for (; n > 3; n -= 4)
+	for (; n > 7; n -= 8)
 	{
 		const __m512d a = _mm512_load_pd(p);
 		const __m512d b = _mm512_load_pd(q);
 		const __m512d sub = _mm512_sub_pd(b, a);
 		const __m512d sqr = _mm512_mul_pd(sub, sub);
 		euclidean = _mm512_add_pd(euclidean, sqr);
-		p += 4;
-		q += 4;
+		p += 8;
+		q += 8;
 	}
 
 	result = __m512d__Distance::_mm512_rdcsd_f64(euclidean);
@@ -35,15 +36,15 @@ __m512d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 	double result = 0;
 	__m512d manhattan = _mm512_setzero_pd();
 
-	for (; n > 3; n -= 4)
+	for (; n > 7; n -= 8)
 	{
 		const __m512d a = _mm512_load_pd(p);
 		const __m512d b = _mm512_load_pd(q);
 		const __m512d sub = _mm512_sub_pd(b, a);
 		const __m512d abs = __m512d__Distance::_mm512_abs_pd(sub);
 		manhattan = _mm512_add_pd(manhattan, abs);
-		p += 4;
-		q += 4;
+		p += 8;
+		q += 8;
 	}
 
 	result = __m512d__Distance::_mm512_rdcsd_f64(manhattan);
@@ -65,7 +66,7 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
 	__m512d left = _mm512_setzero_pd();
 	__m512d right = _mm512_setzero_pd();
 
-	for (; n > 3; n -= 4)
+	for (; n > 7; n -= 8)
 	{
 		const __m512d a = _mm512_load_pd(p);
 		const __m512d b = _mm512_load_pd(q);
@@ -76,8 +77,8 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
 		const __m512d mul_bb = _mm512_mul_pd(b, b);
 		right = _mm512_add_pd(right, mul_bb);
 
-		p += 4;
-		q += 4;
+		p += 8;
+		q += 8;
 	}
 
 	const __m256d empty = _mm256_setzero_pd();
@@ -99,7 +100,7 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
 		}
 	}
 
-	/* __m256d load_pd = _mm256_load_pd(empty, &double_left); */
+	__m512d load_pd = _mm512_load_pd(empty, &double_left);
 	/* load_pd = _mm_loadh_pd(load_pd, &double_right); */
 	/* const __m256d sqrt_left_right = _mm_sqrt_pd(load_pd); */
 
@@ -117,13 +118,14 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
 	/* const __m256d shuffle = _mm_shuffle_pd(cosine, cosine, 1); */
 	/* const __m256d sum = _mm_add_pd(cosine, shuffle); */
 	/* return _mm_cvtsd_f64(sum); */
+    return 0.;
 }
 
 __m512d
 __m512d__Distance::_mm512_abs_pd(__m512d a)
 {
 	static const __m512d sign_mask = _mm512_set1_pd(-0.);
-	return _mm512_andnot_pd(sign_mask, a);
+	return a; //_mm512_andnot_pd(sign_mask, a);
 }
 
 double
