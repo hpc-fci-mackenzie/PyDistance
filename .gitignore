@@ -1,7 +1,4 @@
 # CMake
-cmake-build-debug/
-cmake-build-release/
-cmake-build-default/
 CMakeFiles/
 build/
 compile_commands.json
@@ -10,7 +7,6 @@ compile_commands.json
 *.o
 *.so
 
-python/.idea
 python/venv
 python/*.so
 python/__pycache__/*

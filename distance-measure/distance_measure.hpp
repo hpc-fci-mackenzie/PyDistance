@@ -2,7 +2,7 @@
 #define DISTANCE_MEASURE_HPP
 
 #include <typeinfo>
-#include <math.h>
+#include <cmath>
 #include <cctype>
 
 class DistanceMeasure

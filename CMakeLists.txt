@@ -31,10 +31,10 @@ set(CXXFLAGS_O0 "-O0")
 set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone")
 set(CXXFLAGS_SSE2 "-O3 -march=native")
 set(CXXFLAGS_AVX2 "-O3 -march=native -mavx2")
-set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512vl")
+set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512cd")
 
 ### Output
-# Set the output directory for the .so
+# Set the output directory for the .so file
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
 # Set the output directory for the binaries
@@ -43,10 +43,10 @@ set(CMAKE_BINARY_DIR ${PROJECT_BINARY_DIR}/bin)
 # Set the output directory for the executables
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
-# Option to choose DataType usage
-set(REGISTER_WIDTH "auto" CACHE STRING "DataType chosen")
+# Option to choose the build's register width
+set(REGISTER_WIDTH "auto" CACHE STRING "REGISTER_WIDTH set")
 set_property(CACHE REGISTER_WIDTH PROPERTY STRINGS auto 128 256 512)
-message(STATUS "DataType chosen: ${REGISTER_WIDTH}")
+message(STATUS "REGISTER_WIDTH set: ${REGISTER_WIDTH}")
 
 ### Build
 # Create the DistanceMeasureFactory.so artifact
@@ -80,7 +80,7 @@ elseif ("${REGISTER_WIDTH}" MATCHES "256")
 elseif ("${REGISTER_WIDTH}" MATCHES "512")
 
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-        # require at least gcc 7
+        # requires at least gcc 7
         if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
             message(FATAL_ERROR "GCC version must be at least 7.0!")
         endif()
@@ -94,14 +94,14 @@ elseif ("${REGISTER_WIDTH}" MATCHES "512")
 
 else()
 
-    message (FATAL_ERROR "DataType '${REGISTER_WIDTH}' not recognized")
+    message (FATAL_ERROR "Invalid register width: '${REGISTER_WIDTH}'")
 
 endif()
 
 
-###################
-### INTEGRATION ###
-###################
+##########################
+### PYTHON INTEGRATION ###
+##########################
 
 # Create the DistanceMeasure.so artifact
 add_library(PyDistance SHARED adapter/cpp/DistanceMeasureAdapter.cpp)
@@ -113,9 +113,9 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 # Link the DistanceMeasure lib with the DistanceMeasureFactory lib
 target_link_libraries(PyDistance DistanceMeasureFactory ${PYTHON_LIBRARIES})
 
-###################
-### DEBUG #########
-###################
+#############
+### DEBUG ###
+#############
 
 add_library(benchmark SHARED benchmark/benchmark.cpp benchmark/benchmark.hpp benchmark/StopWatch.cpp distance-measure/distance_measure.hpp)
 
@@ -125,8 +125,3 @@ target_link_libraries(main benchmark DistanceMeasureFactory)
 # main.py
 # Copy the Python's main file to the library directory
 file(COPY debug/main.py DESTINATION ${PROJECT_BINARY_DIR}/lib)
-
-###################
-###################
-###################
-
