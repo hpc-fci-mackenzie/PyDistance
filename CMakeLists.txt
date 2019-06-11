@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-#set(CMAKE_BUILD_TYPE Release)
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 project(PyDistance)
 
 # For development, only,
@@ -45,15 +44,15 @@ set(CMAKE_BINARY_DIR ${PROJECT_BINARY_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 # Option to choose DataType usage
-set(ATA_TYPE "auto" CACHE STRING "DataType chosen")
-set_property(CACHE ATA_TYPE PROPERTY STRINGS auto 128 256 512)
-message(STATUS "DataType chosen: ${ATA_TYPE}")
+set(REGISTER_WIDTH "auto" CACHE STRING "DataType chosen")
+set_property(CACHE REGISTER_WIDTH PROPERTY STRINGS auto 128 256 512)
+message(STATUS "DataType chosen: ${REGISTER_WIDTH}")
 
 ### Build
 # Create the DistanceMeasureFactory.so artifact
 add_library(DistanceMeasureFactory SHARED adapter/cpp/DistanceMeasureFactory.cpp adapter/cpp/DistanceMeasureFactory.hpp)
 
-if ("${ATA_TYPE}" MATCHES "auto")
+if ("${REGISTER_WIDTH}" MATCHES "auto")
 
     add_library(distance SHARED distance-measure/baseline_distance.cpp distance-measure/baseline_distance.hpp distance-measure/distance_measure.hpp)
     set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
@@ -61,7 +60,7 @@ if ("${ATA_TYPE}" MATCHES "auto")
     target_compile_definitions(DistanceMeasureFactory PRIVATE _0)
     target_link_libraries(DistanceMeasureFactory distance)
 
-elseif ("${ATA_TYPE}" MATCHES "128")
+elseif ("${REGISTER_WIDTH}" MATCHES "128")
 
     add_library(distance SHARED distance-measure/__m128d__distance.cpp distance-measure/__m128d__distance.hpp distance-measure/distance_measure.hpp)
     set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
@@ -69,7 +68,7 @@ elseif ("${ATA_TYPE}" MATCHES "128")
     target_compile_definitions(DistanceMeasureFactory PRIVATE _128)
     target_link_libraries(DistanceMeasureFactory distance)
 
-elseif ("${ATA_TYPE}" MATCHES "256")
+elseif ("${REGISTER_WIDTH}" MATCHES "256")
 
     add_library(distance SHARED distance-measure/__m256d__distance.cpp distance-measure/__m256d__distance.hpp distance-measure/distance_measure.hpp)
     set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX2})
@@ -78,7 +77,7 @@ elseif ("${ATA_TYPE}" MATCHES "256")
     target_link_libraries(DistanceMeasureFactory distance)
 
 
-elseif ("${ATA_TYPE}" MATCHES "512")
+elseif ("${REGISTER_WIDTH}" MATCHES "512")
 
     if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         # require at least gcc 7
@@ -95,7 +94,7 @@ elseif ("${ATA_TYPE}" MATCHES "512")
 
 else()
 
-    message (FATAL_ERROR "DataType '${ATA_TYPE}' not recognized")
+    message (FATAL_ERROR "DataType '${REGISTER_WIDTH}' not recognized")
 
 endif()
 
