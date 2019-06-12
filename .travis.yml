@@ -19,6 +19,8 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=auto
+      install: choco install mingw --version 4.9.3 --force
+      script: mingw32-make travis
 
     - os: linux
       env: REGISTER_WIDTH=128
