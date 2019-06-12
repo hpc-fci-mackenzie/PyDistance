@@ -18,7 +18,7 @@ matrix:
       addons:
         apt:
           sources:
-            - llvm-toolchain-precise-3.8
+            - llvm-toolchain-trusty-3.8
           packages:
             - g++-4.8
 script:
