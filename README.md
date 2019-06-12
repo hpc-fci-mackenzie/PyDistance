@@ -1,5 +1,4 @@
 # PyDistance
-<<<<<<< HEAD
 
 ![Build Status](https://travis-ci.org/hpc-fci-mackenzie/edcalc.svg?branch=master)
 
