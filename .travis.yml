@@ -21,6 +21,6 @@ env:
 
 script:
     - mkdir build 
-    - cd build_
+    - cd build
     - cmake .. -D REGISTER_WIDTH=$TARGET
     - make -j 2
