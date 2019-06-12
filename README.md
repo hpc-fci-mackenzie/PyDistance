@@ -1,6 +1,6 @@
 # PyDistance
 
-| Branch |Build Status|
+| Branch |Status|
 |--------|------------|
 | Master |[![master Branch Build Status](https://travis-ci.org/hpc-fci-mackenzie/PyDistance.svg?branch=master)](https://travis-ci.org/hpc-fci-mackenzie/PyDistance)|
 | Dev    |[![dev Branch Build Status](https://travis-ci.org/hpc-fci-mackenzie/PyDistance.svg?branch=dev)](https://travis-ci.org/hpc-fci-mackenzie/PyDistance)|
@@ -11,19 +11,21 @@ PyDistance is a set of distance measure implementations optimized for a variety 
 
 `CMake` >= 3.8
 
-## Supported AVX Instruction Sets
-- AVX-128
-- AVX-256
-- AVX-512
+## Supported AVX Instruction Sets & Building
 
-## Building
+The setting `REGISTER_WIDTH` may be specified to take full advantage of the target architecture, as follows:
 
-The setting `REGISTER_WIDTH` may be specified to take full advantage of the target architecture.
+| AVX Instruction Set |REGISTER_WIDTH option|
+|--------|------------|
+|Auto Vectorization |auto|
+|AVX-128 |128|
+|AVX-256 |256|
+|AVX-512 |512|
 
 ``` bash
 $ mkdir build 
 $ cd build
-$ cmake ..
+$ cmake .. [-D REGISTER_WIDTH=<auto|128|256|512>]
 $ make
 $ cd lib
 ```

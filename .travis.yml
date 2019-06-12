@@ -18,9 +18,18 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=auto
+      osx_image: xcode10
+      before_install:
+        - brew install gcc && CC=gcc-6 && CXX=g++-6
 
     - os: windows
       env: REGISTER_WIDTH=auto
+      install: choco install mingw --version 4.9.3 --force
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DPYTHON_INCLUDE_DIR=C:\Python27\include -DPYTHON_LIBRARY=C:\Python27\libs 
+        - mingw32-make all
 
     - os: linux
       env: REGISTER_WIDTH=128
@@ -33,6 +42,17 @@ matrix:
 
     - os: linux
       env: REGISTER_WIDTH=256
+      sudo: yes
+      dist: trusty
+      before_install:
+        - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        - sudo apt-get update -qq
+      install: 
+        - sudo apt-get install -qq g++-7
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+
+    - os: linux
+      env: REGISTER_WIDTH=512
       sudo: yes
       dist: trusty
       before_install:
