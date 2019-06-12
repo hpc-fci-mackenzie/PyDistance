@@ -5,13 +5,12 @@ os:
     - osx
     - windows
 
+allow_failures:
+    - os: osx
+    - os: windows
+
 compiler: 
     - gcc
-
-matrix:
-    allow_failures:
-        - os: osx
-        - os: windows
 
 env:
     matrix:
@@ -20,10 +19,8 @@ env:
         - TARGET="256"       
         - TARGET="512"       
 
-before_script:
-    - mkdir build 
-    - cd build
-    - cmake .. -D REGISTER_WIDTH=$TARGET
-
 script:
-    make -j 2
+    - mkdir build 
+    - cd build_
+    - cmake .. -D REGISTER_WIDTH=$TARGET
+    - make -j 2
