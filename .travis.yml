@@ -29,7 +29,7 @@ matrix:
         - mkdir build 
         - cd build
         - cmake .. -DPYTHON_INCLUDE_DIR=C:\Python27\include -DPYTHON_LIBRARY=C:\Python27\libs 
-        - mingw32-make all
+        - mingw32-make
 
     - os: linux
       env: REGISTER_WIDTH=128
