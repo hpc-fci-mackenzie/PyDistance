@@ -6,7 +6,7 @@ os:
     - windows
 
 install: 
-    - make
+    - cmake
 
 compiler: 
     - gcc
