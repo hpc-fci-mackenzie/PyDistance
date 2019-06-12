@@ -38,7 +38,7 @@ matrix:
         - sudo apt-get update -qq
       install: 
         - sudo apt-get install -qq g++-7
-        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
 script:
     - mkdir build 
