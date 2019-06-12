@@ -21,5 +21,3 @@ The setting `REGISTER_WIDTH` may be specified to take full advantage of the targ
 $ cd lib
 $ python main.py
 ```
-
-## Contributing
