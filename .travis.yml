@@ -1,0 +1,17 @@
+language: cpp
+
+os:
+    - linux
+    - osx
+    - windows
+
+install: 
+    - make
+
+compiler: 
+    - gcc
+
+matrix:
+    allow_failures:
+        - os: osx
+        - os: windows
