@@ -1,0 +1,26 @@
+language: cpp
+
+os:
+    - linux
+    - osx
+    - windows
+
+install: 
+    - make
+
+compiler: 
+    - gcc
+
+matrix:
+    allow_failures:
+        - os: osx
+        - os: windows
+  - TARGET="auto"
+  - TARGET="128"
+  - TARGET="256"       
+  - TARGET="512"       
+
+before_script:
+    - mkdir build 
+    - cd build
+    - cmake .. -D REGISTER_WIDTH=$TARGET
