@@ -1,20 +1,26 @@
-# vim:ft=ansible:
 language: cpp
 
 compiler:
   - gcc
-
-dist: trusty
 
 matrix:
   allow_failures:
     - os: osx
   include:
     - os: linux
-    - env: REGISTER_WIDTH=auto
-    - env: REGISTER_WIDTH=128
-    - env: REGISTER_WIDTH=256
-      
+      env: REGISTER_WIDTH=auto
+    - os: linux
+      env: REGISTER_WIDTH=128
+    - os: linux
+      env: REGISTER_WIDTH=256
+      sudo: yes
+      dist: trusty
+      addons:
+        apt:
+          sources:
+            - llvm-toolchain-precise-3.8
+          packages:
+            - g++-4.8
 script:
     - mkdir build 
     - cd build
