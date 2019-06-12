@@ -127,10 +127,6 @@ __m256d__Distance::_mm256_abs_pd(__m256d a)
 	return _mm256_andnot_pd(sign_mask, a);
 }
 
-void to_string(__m512d a){
-
-}
-
 double
 __m256d__Distance::_mm256_rdcsd_f64(__m256d a)
 {
