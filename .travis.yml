@@ -4,13 +4,20 @@ compiler:
   - gcc
 
 matrix:
+
   allow_failures:
     - os: osx
+    - os: windows
+
   include:
+
     - os: linux
       env: REGISTER_WIDTH=auto
 
     - os: osx
+      env: REGISTER_WIDTH=auto
+
+    - os: windows
       env: REGISTER_WIDTH=auto
 
     - os: osx
@@ -29,7 +36,7 @@ matrix:
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise-3.8
           packages:
-            - g++-4.8
+            - g++-5.1
 
 script:
     - mkdir build 
