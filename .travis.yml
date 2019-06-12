@@ -1,26 +1,22 @@
+# vim:ft=ansible:
 language: cpp
 
-os:
-    - linux
-    - osx
-    - windows
+compiler:
+  - gcc
 
-allow_failures:
+dist: trusty
+
+matrix:
+  allow_failures:
     - os: osx
-    - os: windows
-
-compiler: 
-    - gcc
-
-env:
-    matrix:
-        - TARGET="auto"
-        - TARGET="128"
-        - TARGET="256"       
-        - TARGET="512"       
-
+  include:
+    - os: linux
+    - env: REGISTER_WIDTH=auto
+    - env: REGISTER_WIDTH=128
+    - env: REGISTER_WIDTH=256
+      
 script:
     - mkdir build 
     - cd build
-    - cmake .. -DREGISTER_WIDTH=$TARGET
+    - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
     - make -j 2

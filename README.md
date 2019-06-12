@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/hpc-fci-mackenzie/PyDistance.svg?branch=master)](https://travis-ci.org/hpc-fci-mackenzie/PyDistance)
 
-PyDistance is a set of distance measure implementations optimized for a variety of processors with SIMD support written in C, able to be used from Python.
+PyDistance is a set of distance measure implementations optimized for a variety of processors with SIMD support written in C++, able to be used from Python.
 
 ## Requirements
 
