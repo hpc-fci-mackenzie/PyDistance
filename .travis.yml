@@ -12,12 +12,13 @@ matrix:
     allow_failures:
         - os: osx
         - os: windows
-    env:
+
+env:
     matrix:
-          - TARGET="auto"
-          - TARGET="128"
-          - TARGET="256"       
-          - TARGET="512"       
+        - TARGET="auto"
+        - TARGET="128"
+        - TARGET="256"       
+        - TARGET="512"       
 
 before_script:
     - mkdir build 
