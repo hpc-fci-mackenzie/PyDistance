@@ -24,7 +24,7 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=auto
-      install: choco install mingw --version 4.9.3 --force
+      install: choco install make
       script: 
         - mkdir build 
         - cd build

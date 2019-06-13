@@ -1,9 +1,9 @@
 #ifndef CALIPER_BASIC_HPP
 #define CALIPER_BASIC_HPP
 
-#include "caliper_basic.hpp"
+#include "caliper.hpp"
 
-class BaseCaliper : public Caliper
+class CaliperBasic : public Caliper
 {
 public:
 	double

@@ -1,7 +1,7 @@
 #include "caliper_basic.hpp"
 
 double
-BaseCaliper::euclidean(const double *p, const double *q, unsigned long n)
+CaliperBasic::euclidean(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     for (int i = 0; i < n; ++i)
@@ -13,7 +13,7 @@ BaseCaliper::euclidean(const double *p, const double *q, unsigned long n)
 }
 
 double
-BaseCaliper::manhattan(const double *p, const double *q, unsigned long n)
+CaliperBasic::manhattan(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     for (int i = 0; i < n; ++i)
@@ -25,7 +25,7 @@ BaseCaliper::manhattan(const double *p, const double *q, unsigned long n)
 }
 
 double
-BaseCaliper::cosine(const double *p, const double *q, unsigned long n)
+CaliperBasic::cosine(const double *p, const double *q, unsigned long n)
 {
     double top = 0;
     double left = 0;
