@@ -25,11 +25,11 @@ matrix:
     - os: windows
       env: REGISTER_WIDTH=auto
       install: choco install make
-      # script: 
-      #   - mkdir build 
-      #   - cd build
-      #   - cmake .. -DPYTHON_INCLUDE_DIR=C:\Python27\include -DPYTHON_LIBRARY=C:\Python27\libs 
-      #   - mingw32-make -f Makefile
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DPYTHON_INCLUDE_DIR=C:\Python27\include -DPYTHON_LIBRARY=C:\Python27\libs 
+        - make
 
     - os: linux
       env: REGISTER_WIDTH=128
