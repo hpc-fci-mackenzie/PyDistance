@@ -15,16 +15,24 @@ matrix:
 
     - os: linux
       env: REGISTER_WIDTH=auto
-      after_script: 
-        - bash -c 'if [[ `./bin/test_bin` ]]; then >&2 echo "Fail"; exit 1; fi' 
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: osx
       env: REGISTER_WIDTH=auto
       osx_image: xcode10
       before_install:
         - brew install gcc && CC=gcc-6 && CXX=g++-6
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=auto
@@ -34,23 +42,34 @@ matrix:
         - cd build
         - cmake .. -DPYTHON_INCLUDE_DIR=C:\Python27\include -DPYTHON_LIBRARY=C:\Python27\libs 
         - make
-      after_script: 
-        - exit $(./bin/test_bin)
+        - ./bin/test_bin
 
     - os: linux
       env: REGISTER_WIDTH=128
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - bash -c 'if [[ `./bin/test_bin` ]]; then >&2 echo "Fail"; exit 1; fi' 
 
     - os: osx
       env: REGISTER_WIDTH=128
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=128
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: linux
       env: REGISTER_WIDTH=256
@@ -62,18 +81,30 @@ matrix:
       install: 
         - sudo apt-get install -qq g++-7
         - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: osx
       env: REGISTER_WIDTH=256
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=256
-      after_script: 
-        - exit $(./bin/test_bin)
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        # - ./bin/test_bin
 
     - os: linux
       env: REGISTER_WIDTH=512
@@ -91,9 +122,3 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=512
-
-script:
-    - mkdir build 
-    - cd build
-    - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
-    - make -j 2

@@ -62,8 +62,9 @@ main()
 {
 	auto *factory = new CaliperFactory();
 	auto *caliper = factory->produce();
+    int passed = 1;
     for(int i=1; i <= 3; i++)
         printf("Test %d %s\n", i+1, 
-                testNoDifference(caliper, i+1) ? "passed" : "failed");
-	return 0;
+                (passed &= testNoDifference(caliper, i+1)) ? "passed" : "failed");
+	return !passed;
 }
