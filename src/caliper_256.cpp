@@ -1,7 +1,7 @@
-#include "__m256d__distance.hpp"
+#include "caliper_256.hpp"
 
 double
-__m256d__Distance::euclidean(const double *p, const double *q, unsigned long n)
+Caliper256::euclidean(const double *p, const double *q, unsigned long n)
 {
 	double result = 0;
 	__m256d euclidean = _mm256_setzero_pd();
@@ -17,7 +17,7 @@ __m256d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 		q += 4;
 	}
 
-	result = __m256d__Distance::_mm256_rdcsd_f64(euclidean);
+	result = Caliper256::_mm256_rdcsd_f64(euclidean);
 	if (n)
 	{
 		for (int i = 0; i < n; ++i)
@@ -30,7 +30,7 @@ __m256d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m256d__Distance::manhattan(const double *p, const double *q, unsigned long n)
+Caliper256::manhattan(const double *p, const double *q, unsigned long n)
 {
 	double result = 0;
 	__m256d manhattan = _mm256_setzero_pd();
@@ -40,13 +40,13 @@ __m256d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 		const __m256d a = _mm256_load_pd(p);
 		const __m256d b = _mm256_load_pd(q);
 		const __m256d sub = _mm256_sub_pd(b, a);
-		const __m256d abs = __m256d__Distance::_mm256_abs_pd(sub);
+		const __m256d abs = Caliper256::_mm256_abs_pd(sub);
 		manhattan = _mm256_add_pd(manhattan, abs);
 		p += 4;
 		q += 4;
 	}
 
-	result = __m256d__Distance::_mm256_rdcsd_f64(manhattan);
+	result = Caliper256::_mm256_rdcsd_f64(manhattan);
 	if (n)
 	{
 		for (int i = 0; i < n; ++i)
@@ -59,7 +59,7 @@ __m256d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m256d__Distance::cosine(const double *p, const double *q, unsigned long n)
+Caliper256::cosine(const double *p, const double *q, unsigned long n)
 {
 	__m256d top = _mm256_setzero_pd();
 	__m256d  left = _mm256_setzero_pd();
@@ -81,8 +81,8 @@ __m256d__Distance::cosine(const double *p, const double *q, unsigned long n)
 	}
 
 	const __m128d empty = _mm_setzero_pd();
-	double double_left = __m256d__Distance::_mm256_rdcsd_f64(left);
-	double double_right = __m256d__Distance::_mm256_rdcsd_f64(right);
+	double double_left = Caliper256::_mm256_rdcsd_f64(left);
+	double double_right = Caliper256::_mm256_rdcsd_f64(right);
 
 	if (n)
 	{
@@ -121,14 +121,14 @@ __m256d__Distance::cosine(const double *p, const double *q, unsigned long n)
 }
 
 __m256d
-__m256d__Distance::_mm256_abs_pd(__m256d a)
+Caliper256::_mm256_abs_pd(__m256d a)
 {
 	static const __m256d sign_mask = _mm256_set1_pd(-0.);
 	return _mm256_andnot_pd(sign_mask, a);
 }
 
 double
-__m256d__Distance::_mm256_rdcsd_f64(__m256d a)
+Caliper256::_mm256_rdcsd_f64(__m256d a)
 {
 	__m256d sum_lane = _mm256_hadd_pd(a, a);
 	__m256d permute_lane = _mm256_permute2f128_pd(sum_lane, sum_lane, 1);

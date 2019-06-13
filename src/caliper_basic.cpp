@@ -1,7 +1,7 @@
-#include "baseline_distance.hpp"
+#include "caliper_basic.hpp"
 
 double
-BaselineDistance::euclidean(const double *p, const double *q, unsigned long n)
+BaseCaliper::euclidean(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     for (int i = 0; i < n; ++i)
@@ -13,7 +13,7 @@ BaselineDistance::euclidean(const double *p, const double *q, unsigned long n)
 }
 
 double
-BaselineDistance::manhattan(const double *p, const double *q, unsigned long n)
+BaseCaliper::manhattan(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     for (int i = 0; i < n; ++i)
@@ -25,7 +25,7 @@ BaselineDistance::manhattan(const double *p, const double *q, unsigned long n)
 }
 
 double
-BaselineDistance::cosine(const double *p, const double *q, unsigned long n)
+BaseCaliper::cosine(const double *p, const double *q, unsigned long n)
 {
     double top = 0;
     double left = 0;

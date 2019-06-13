@@ -49,32 +49,32 @@ set_property(CACHE REGISTER_WIDTH PROPERTY STRINGS auto 128 256 512)
 message(STATUS "REGISTER_WIDTH set: ${REGISTER_WIDTH}")
 
 ### Build
-# Create the DistanceMeasureFactory.so artifact
-add_library(DistanceMeasureFactory SHARED adapter/cpp/DistanceMeasureFactory.cpp adapter/cpp/DistanceMeasureFactory.hpp)
+# Create the CaliperFactory.so artifact
+add_library(CaliperFactory SHARED src/adapter/cpp/CaliperFactory.cpp src/adapter/cpp/CaliperFactory.hpp)
 
 if ("${REGISTER_WIDTH}" MATCHES "auto")
 
-    add_library(distance SHARED distance-measure/baseline_distance.cpp distance-measure/baseline_distance.hpp distance-measure/distance_measure.hpp)
-    set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
+    add_library(caliper SHARED src/caliper_basic.cpp src/caliper_basic.hpp src/caliper.hpp)
+    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
 
-    target_compile_definitions(DistanceMeasureFactory PRIVATE _0)
-    target_link_libraries(DistanceMeasureFactory distance)
+    target_compile_definitions(CaliperFactory PRIVATE _AUTO)
+    target_link_libraries(CaliperFactory caliper)
 
 elseif ("${REGISTER_WIDTH}" MATCHES "128")
 
-    add_library(distance SHARED distance-measure/__m128d__distance.cpp distance-measure/__m128d__distance.hpp distance-measure/distance_measure.hpp)
-    set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
+    add_library(caliper SHARED src/caliper_128.cpp src/caliper_128.hpp src/caliper.hpp)
+    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
 
-    target_compile_definitions(DistanceMeasureFactory PRIVATE _128)
-    target_link_libraries(DistanceMeasureFactory distance)
+    target_compile_definitions(CaliperFactory PRIVATE _128)
+    target_link_libraries(CaliperFactory caliper)
 
 elseif ("${REGISTER_WIDTH}" MATCHES "256")
 
-    add_library(distance SHARED distance-measure/__m256d__distance.cpp distance-measure/__m256d__distance.hpp distance-measure/distance_measure.hpp)
-    set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX2})
+    add_library(caliper SHARED src/caliper_256.cpp src/caliper_256.hpp src/caliper.hpp)
+    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX2})
 
-    target_compile_definitions(DistanceMeasureFactory PRIVATE _256)
-    target_link_libraries(DistanceMeasureFactory distance)
+    target_compile_definitions(CaliperFactory PRIVATE _256)
+    target_link_libraries(CaliperFactory caliper)
 
 
 elseif ("${REGISTER_WIDTH}" MATCHES "512")
@@ -86,11 +86,11 @@ elseif ("${REGISTER_WIDTH}" MATCHES "512")
         endif()
     endif()
 
-    add_library(distance SHARED distance-measure/__m512d__distance.cpp distance-measure/__m512d__distance.hpp distance-measure/distance_measure.hpp)
-    set_property(TARGET distance PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
+    add_library(caliper SHARED src/caliper_512.cpp src/caliper.hpp src/caliper.hpp)
+    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
 
-    target_compile_definitions(DistanceMeasureFactory PRIVATE _512)
-    target_link_libraries(DistanceMeasureFactory distance)
+    target_compile_definitions(CaliperFactory PRIVATE _512)
+    target_link_libraries(CaliperFactory caliper)
 
 else()
 
@@ -103,25 +103,25 @@ endif()
 ### PYTHON INTEGRATION ###
 ##########################
 
-# Create the DistanceMeasure.so artifact
-add_library(PyDistance SHARED adapter/cpp/DistanceMeasureAdapter.cpp)
+# Create the Caliper.so artifact
+add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)
 
 # Set the Python version to default in the OS
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
-# Link the DistanceMeasure lib with the DistanceMeasureFactory lib
-target_link_libraries(PyDistance DistanceMeasureFactory ${PYTHON_LIBRARIES})
+# Link the Caliper lib with the CaliperFactory lib
+target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
 
 #############
 ### DEBUG ###
 #############
 
-add_library(benchmark SHARED benchmark/benchmark.cpp benchmark/benchmark.hpp benchmark/StopWatch.cpp distance-measure/distance_measure.hpp)
+add_library(benchmark SHARED src/benchmark/benchmark.cpp src/benchmark/benchmark.hpp src/benchmark/StopWatch.cpp src/caliper.hpp)
 
-add_executable(main debug/main.cpp)
-target_link_libraries(main benchmark DistanceMeasureFactory)
+add_executable(test test/test.cpp)
+target_link_libraries(test benchmark CaliperFactory)
 
-# main.py
-# Copy the Python's main file to the library directory
-file(COPY debug/main.py DESTINATION ${PROJECT_BINARY_DIR}/lib)
+# test.py
+# Copy the Python's test file to the library directory
+file(COPY test/test.py DESTINATION ${PROJECT_BINARY_DIR}/lib)

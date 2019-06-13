@@ -1,8 +1,7 @@
-
-#include "__m512d__distance.hpp"
+#include "caliper_512.hpp"
 
 double
-__m512d__Distance::euclidean(const double *p, const double *q, unsigned long n)
+Caliper512::euclidean(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     __m512d euclidean = _mm512_setzero_pd();
@@ -18,7 +17,7 @@ __m512d__Distance::euclidean(const double *p, const double *q, unsigned long n)
         q += 8;
     }
 
-    result = __m512d__Distance::_mm512_rdcsd_f64(euclidean);
+    result = Caliper512::_mm512_rdcsd_f64(euclidean);
     if (n)
     {
         for (int i = 0; i < n; ++i)
@@ -31,7 +30,7 @@ __m512d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m512d__Distance::manhattan(const double *p, const double *q, unsigned long n)
+Caliper512::manhattan(const double *p, const double *q, unsigned long n)
 {
     double result = 0;
     __m512d manhattan = _mm512_setzero_pd();
@@ -41,13 +40,13 @@ __m512d__Distance::manhattan(const double *p, const double *q, unsigned long n)
         const __m512d a = _mm512_load_pd(p);
         const __m512d b = _mm512_load_pd(q);
         const __m512d sub = _mm512_sub_pd(b, a);
-        const __m512d abs = __m512d__Distance::_mm512_abs_pd(sub);
+        const __m512d abs = Caliper512::_mm512_abs_pd(sub);
         manhattan = _mm512_add_pd(manhattan, abs);
         p += 8;
         q += 8;
     }
 
-    result = __m512d__Distance::_mm512_rdcsd_f64(manhattan);
+    result = Caliper512::_mm512_rdcsd_f64(manhattan);
     if (n)
     {
         for (int i = 0; i < n; ++i)
@@ -60,7 +59,7 @@ __m512d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
+Caliper512::cosine(const double *p, const double *q, unsigned long n)
 {
     __m512d top = _mm512_setzero_pd();
     __m512d left = _mm512_setzero_pd();
@@ -82,8 +81,8 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
     }
 
     const __m256d empty = _mm256_setzero_pd();
-    double double_left = __m512d__Distance::_mm512_rdcsd_f64(left);
-    double double_right = __m512d__Distance::_mm512_rdcsd_f64(right);
+    double double_left = Caliper512::_mm512_rdcsd_f64(left);
+    double double_right = Caliper512::_mm512_rdcsd_f64(right);
 
     if (n)
     {
@@ -92,7 +91,6 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
             const double a = p[i] * q[i];
             const __m512d top_leftover = _mm512_load_pd(&a);
             top = _mm512_add_pd(top, top_leftover);
-
             const double b = p[i] * p[i];
             double_left += b;
             const double c = q[i] * q[i];
@@ -122,14 +120,14 @@ __m512d__Distance::cosine(const double *p, const double *q, unsigned long n)
 }
 
 __m512d
-__m512d__Distance::_mm512_abs_pd(__m512d a)
+Caliper512::_mm512_abs_pd(__m512d a)
 {
     static const __m512d sign_mask = _mm512_set1_pd(-0.);
     return a; //_mm512_andnot_pd(sign_mask, a);
 }
 
 double
-__m512d__Distance::_mm512_rdcsd_f64(__m512d a)
+Caliper512::_mm512_rdcsd_f64(__m512d a)
 {
     __m512d sum_lane = _mm512_add_pd(a, a);
     /* __m512d permute_lane = _mm512_permute2f256_pd(sum_lane, sum_lane, 1); */

@@ -1,10 +1,10 @@
-#include "DistanceMeasureFactory.hpp"
+#include "CaliperFactory.hpp"
 #include <Python.h>
 
 double
 euclidean(const double *x, const double *y, unsigned long n)
 {
-    auto *factory = new DistanceMeasureFactory();
+    auto *factory = new CaliperFactory();
     auto *d_measure = factory->produce();
     return d_measure->euclidean(x, y, n);
 }
@@ -12,7 +12,7 @@ euclidean(const double *x, const double *y, unsigned long n)
 const char *
 class_name()
 {
-    auto *factory = new DistanceMeasureFactory();
+    auto *factory = new CaliperFactory();
     auto *d_measure = factory->produce();
     return d_measure->getClassSimpleName();
 }

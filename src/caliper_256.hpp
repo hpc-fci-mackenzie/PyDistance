@@ -1,10 +1,10 @@
-#ifndef __m512D__DISTANCE_HPP
-#define __m512D__DISTANCE_HPP
+#ifndef CALIPER_256_HPP
+#define CALIPER_256_HPP
 
-#include "distance_measure.hpp"
+#include "caliper.hpp"
 #include <immintrin.h>
 
-class __m512d__Distance : public DistanceMeasure
+class Caliper256 : public Caliper
 {
 public:
 	double
@@ -14,10 +14,10 @@ public:
 	double
 	cosine(const double *p, const double *q, unsigned long n) override;
 private:
-	inline __m512d
-	_mm512_abs_pd(__m512d a);
+	inline __m256d
+	_mm256_abs_pd(__m256d a);
 	inline double
-	_mm512_rdcsd_f64(__m512d a);
+	_mm256_rdcsd_f64(__m256d a);
 };
 
-#endif //__m512D__DISTANCE_HPP
+#endif //__m256D__DISTANCE_HPP

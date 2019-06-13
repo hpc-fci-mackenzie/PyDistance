@@ -4,7 +4,7 @@
 #include <iostream>
 #include <random>
 #include "StopWatch.hpp"
-#include "../distance-measure/distance_measure.hpp"
+#include "../caliper.hpp"
 
 class Benchmark
 {
@@ -18,16 +18,16 @@ private:
 	fill_vector(double *, double *, unsigned long);
 
 	static void
-	print_results(DistanceMeasure *, double, double);
+	print_results(Caliper *, double, double);
 
 public:
 	Benchmark(unsigned long, unsigned long);
 	void
-	euclidean(DistanceMeasure *);
+	euclidean(Caliper *);
 	void
-	manhattan(DistanceMeasure *);
+	manhattan(Caliper *);
 	void
-	cosine(DistanceMeasure *);
+	cosine(Caliper *);
 };
 
-#endif //BENCHMARK_HPP
+#endif

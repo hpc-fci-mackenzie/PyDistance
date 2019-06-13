@@ -12,7 +12,7 @@ Benchmark::Benchmark(unsigned long size, unsigned long n_tests)
 }
 
 void
-Benchmark::euclidean(DistanceMeasure *distance)
+Benchmark::euclidean(Caliper *distance)
 {
 	StopWatch sw;
 
@@ -39,7 +39,7 @@ Benchmark::euclidean(DistanceMeasure *distance)
 }
 
 void
-Benchmark::manhattan(DistanceMeasure *distance)
+Benchmark::manhattan(Caliper *distance)
 {
 	StopWatch sw;
 
@@ -66,7 +66,7 @@ Benchmark::manhattan(DistanceMeasure *distance)
 }
 
 void
-Benchmark::cosine(DistanceMeasure *distance)
+Benchmark::cosine(Caliper *distance)
 {
 	StopWatch sw;
 
@@ -106,7 +106,7 @@ Benchmark::fill_vector(double *x, double *y, unsigned long n)
 }
 
 void
-Benchmark::print_results(DistanceMeasure *distance, double time, double result)
+Benchmark::print_results(Caliper *distance, double time, double result)
 {
 	std::cout << " USING CLASS:   " << distance->getClassSimpleName() << std::endl;
 	std::cout.precision(12);
