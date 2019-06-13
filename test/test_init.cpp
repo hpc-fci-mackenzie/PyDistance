@@ -53,7 +53,7 @@ testNoDifference(Caliper* caliper, int distance_measure)
             result = caliper->cosine(p, q, 4);
             break;
     }
-    std::cout << std::string(20, '-');
+    std::cout << std::string(20, '-') << std::endl;
     return result == 0;
 }
 
@@ -64,7 +64,7 @@ main()
 	auto *caliper = factory->produce();
     int passed = 1;
     for(int i=1; i <= 3; i++)
-        printf("Test %d %s\n", i+1, 
-                (passed &= testNoDifference(caliper, i+1)) ? "passed" : "failed");
+        printf("Test %d %s\n", i, 
+                (passed &= testNoDifference(caliper, i)) ? "passed" : "failed");
 	return !passed;
 }
