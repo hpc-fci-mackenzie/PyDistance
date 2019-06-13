@@ -51,7 +51,7 @@ matrix:
         - cd build
         - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
         - make -j 2
-        - bash -c 'if [[ `./bin/test_bin` ]]; then >&2 echo "Fail"; exit 1; fi' 
+        - ./bin/test_bin
 
     - os: osx
       env: REGISTER_WIDTH=128
@@ -90,21 +90,9 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=256
-      script: 
-        - mkdir build 
-        - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
-        - make -j 2
-        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=256
-      script: 
-        - mkdir build 
-        - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
-        - make -j 2
-        # - ./bin/test_bin
 
     - os: linux
       env: REGISTER_WIDTH=512
@@ -122,3 +110,9 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=512
+
+script: 
+  - mkdir build 
+  - cd build
+  - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+  - make -j 2
