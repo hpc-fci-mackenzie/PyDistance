@@ -28,15 +28,15 @@ testNoDifference(Caliper* caliper, int distance_measure)
     double p[] = {1.0, 2.0, 3.0, 4.0};
     double q[] = {1.0, 2.0, 3.0, 4.0};
 
-    std::cout << std::string(20, '-');
-    printf("p = [\n");
+    std::cout << std::string(20, '-') << std::endl;
+    printf("p = [");
     for(int i=0; i < 4; i++)
-        printf("%f%s ", p[i], i != 3 ? "," : "");
+        printf("%f%s", p[i], i != 3 ? ", " : "");
     printf("]\n");
 
-    printf("q = [\n");
+    printf("q = [");
     for(int i=0; i < 4; i++)
-        printf("%f%s ", q[i], i != 3 ? "," : "");
+        printf("%f%s", q[i], i != 3 ? ", " : "");
     printf("]\n");
 
     

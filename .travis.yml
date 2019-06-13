@@ -51,6 +51,12 @@ matrix:
         - sudo apt-get install -qq g++-7
         - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
+    - os: osx
+      env: REGISTER_WIDTH=256
+
+    - os: windows
+      env: REGISTER_WIDTH=256
+
     - os: linux
       env: REGISTER_WIDTH=512
       sudo: yes
@@ -61,6 +67,12 @@ matrix:
       install: 
         - sudo apt-get install -qq g++-7
         - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+
+    - os: osx
+      env: REGISTER_WIDTH=512
+
+    - os: windows
+      env: REGISTER_WIDTH=512
 
 script:
     - mkdir build 
