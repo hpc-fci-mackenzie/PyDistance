@@ -11,6 +11,7 @@
 #define METHOD Caliper512
 #else
 #include "../../caliper_basic.hpp"
+#define METHOD CaliperBasic
 #endif
 
 Caliper *

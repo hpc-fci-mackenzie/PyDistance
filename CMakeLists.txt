@@ -119,8 +119,8 @@ target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
 
 add_library(benchmark SHARED src/benchmark/benchmark.cpp src/benchmark/benchmark.hpp src/benchmark/StopWatch.cpp src/caliper.hpp)
 
-add_executable(test test/test.cpp)
-target_link_libraries(test benchmark CaliperFactory)
+add_executable(test_bin test/test_init.cpp)
+target_link_libraries(test_bin benchmark CaliperFactory)
 
 # test.py
 # Copy the Python's test file to the library directory
