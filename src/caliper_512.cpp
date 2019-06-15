@@ -116,7 +116,7 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
     /* const __m256d shuffle = _mm_shuffle_pd(cosine, cosine, 1); */
     /* const __m256d sum = _mm_add_pd(cosine, shuffle); */
     /* return _mm_cvtsd_f64(sum); */
-    return 0.;
+    return 2.;
 }
 
 __m512d

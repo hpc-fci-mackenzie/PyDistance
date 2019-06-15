@@ -1,9 +1,10 @@
 #include "../src/benchmark/benchmark.hpp"
 #include "../src/adapter/cpp/CaliperFactory.hpp"
 
-#define EUCLIDEAN 1
-#define MANHATTAN 2
-#define COSINE 3
+#define EUCLIDEAN "Euclidean"
+#define MANHATTAN "Manhattan"
+#define COSINE    "Cosine"
+
 
 using namespace std;
 
@@ -23,7 +24,7 @@ benchmark(Caliper* d_measure)
  * returns true if and only if the distance measured is 0
  */
 int
-testNoDifference(Caliper* caliper, int distance_measure)
+testNoDifference(Caliper* caliper, string distance_measure)
 {
     double p[] = {1.0, 2.0, 3.0, 4.0};
     double q[] = {1.0, 2.0, 3.0, 4.0};
@@ -41,19 +42,14 @@ testNoDifference(Caliper* caliper, int distance_measure)
 
     
     double result;
-
-    switch(distance_measure){
-        case EUCLIDEAN:
-            result = caliper->euclidean(p, q, 4);
-            break;
-        case MANHATTAN:
-            result = caliper->manhattan(p, q, 4);
-            break;
-        case COSINE:
-            result = caliper->cosine(p, q, 4);
-            break;
-    }
+    if(distance_measure == EUCLIDEAN)
+        result = caliper->euclidean(p, q, 4);
+    if(distance_measure == MANHATTAN)
+        result = caliper->manhattan(p, q, 4);
+    if(distance_measure == COSINE)
+        result = caliper->cosine(p, q, 4);
     std::cout << std::string(20, '-') << std::endl;
+    printf("Result: %f\n", result);
     return result == 0;
 }
 
@@ -63,9 +59,11 @@ main()
 	auto *factory = new CaliperFactory();
 	auto *caliper = factory->produce();
     int passed = 1;
-    
-    for(int i=1; i <= 3; i++)
-        printf("Test %d %s\n", i, 
-                (passed &= testNoDifference(caliper, i)) ? "passed" : "failed");
+    printf("Test %s %s\n", EUCLIDEAN,
+            (passed &= testNoDifference(caliper, EUCLIDEAN)) ? "passed" : "failed");
+    printf("Test %s %s\n", MANHATTAN, 
+            (passed &= testNoDifference(caliper, MANHATTAN)) ? "passed" : "failed");
+    printf("Test %s %s\n", COSINE,    
+            (passed &= testNoDifference(caliper, COSINE))    ? "passed" : "failed");
 	return !passed;
 }
