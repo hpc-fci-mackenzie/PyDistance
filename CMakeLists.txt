@@ -8,6 +8,8 @@ project(PyDistance)
 
 set(PyDistance_NAME "PyDistance Library")
 message(STATUS "${PyDistance_NAME}")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+
 
 set(PyDistance_VERSION_MAJOR "1")
 set(PyDistance_VERSION_MINOR "1")
@@ -53,28 +55,34 @@ add_library(CaliperFactory SHARED src/adapter/cpp/CaliperFactory.cpp src/adapter
 
 if ("${REGISTER_WIDTH}" MATCHES "auto")
 
+    # detect cpu extensions with some shellscript
     if(CMAKE_SYSTEM_NAME MATCHES "Linux" OR CMAKE_SYSTEM_NAME MATCHES "Darwin")
-        EXEC_PROGRAM(cat ARGS "/proc/cpuinfo" OUTPUT_VARIABLE CPUINFO)
 
-        STRING(REGEX REPLACE "^.*(avx).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
-        STRING(COMPARE EQUAL "avx" "${CPU_FLAG_REGEX}" AVX_TRUE)
+        exec_program(cat ARGS "/proc/cpuinfo" OUTPUT_VARIABLE CPUINFO)
+
+        string(REGEX REPLACE "^.*(avx).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        string(COMPARE EQUAL "avx" "${CPU_FLAG_REGEX}" AVX_TRUE)
         if (AVX_TRUE)
             set(REGISTER_WIDTH "128")
         endif()
 
-        STRING(REGEX REPLACE "^.*(avx2).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
-        STRING(COMPARE EQUAL "avx2" "${CPU_FLAG_REGEX}" AVX2_TRUE)
+        string(REGEX REPLACE "^.*(avx2).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        string(COMPARE EQUAL "avx2" "${CPU_FLAG_REGEX}" AVX2_TRUE)
         if (AVX2_TRUE)
             set(REGISTER_WIDTH "256")
         endif()
 
-        STRING(REGEX REPLACE "^.*(avx5).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
-        STRING(COMPARE EQUAL "avx5" "${CPU_FLAG_REGEX}" AVX5_TRUE)
+        string(REGEX REPLACE "^.*(avx5).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        string(COMPARE EQUAL "avx5" "${CPU_FLAG_REGEX}" AVX5_TRUE)
         if (AVX5_TRUE)
             set(REGISTER_WIDTH "512")
         endif()
 
     elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+
+    else()
+
+        set(REGISTER_WIDTH "auto")
 
     endif()
 endif()
@@ -85,7 +93,6 @@ if ("${REGISTER_WIDTH}" MATCHES "128")
 
     add_library(caliper SHARED src/caliper_128.cpp src/caliper_128.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
-
     target_compile_definitions(CaliperFactory PRIVATE _128)
     target_link_libraries(CaliperFactory caliper)
 
@@ -93,10 +100,8 @@ elseif ("${REGISTER_WIDTH}" MATCHES "256")
 
     add_library(caliper SHARED src/caliper_256.cpp src/caliper_256.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX2})
-
     target_compile_definitions(CaliperFactory PRIVATE _256)
     target_link_libraries(CaliperFactory caliper)
-
 
 elseif ("${REGISTER_WIDTH}" MATCHES "512")
 
@@ -109,8 +114,14 @@ elseif ("${REGISTER_WIDTH}" MATCHES "512")
 
     add_library(caliper SHARED src/caliper_512.cpp src/caliper.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
-
     target_compile_definitions(CaliperFactory PRIVATE _512)
+    target_link_libraries(CaliperFactory caliper)
+
+elseif("${REGISTER_WIDTH}" MATCHES AUTO)
+
+    add_library(caliper SHARED src/caliper_basic.cpp src/caliper_basic.hpp src/caliper.hpp)
+    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
+    target_compile_definitions(CaliperFactory PRIVATE _AUTO)
     target_link_libraries(CaliperFactory caliper)
 
 else()
