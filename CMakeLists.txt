@@ -46,7 +46,6 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 # Option to choose the build's register width
 set(REGISTER_WIDTH "auto" CACHE STRING "REGISTER_WIDTH set")
 set_property(CACHE REGISTER_WIDTH PROPERTY STRINGS auto 128 256 512)
-message(STATUS "REGISTER_WIDTH set: ${REGISTER_WIDTH}")
 
 ### Build
 # Create the CaliperFactory.so artifact
@@ -54,13 +53,35 @@ add_library(CaliperFactory SHARED src/adapter/cpp/CaliperFactory.cpp src/adapter
 
 if ("${REGISTER_WIDTH}" MATCHES "auto")
 
-    add_library(caliper SHARED src/caliper_basic.cpp src/caliper_basic.hpp src/caliper.hpp)
-    set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
+    if(CMAKE_SYSTEM_NAME MATCHES "Linux" OR CMAKE_SYSTEM_NAME MATCHES "Darwin")
+        EXEC_PROGRAM(cat ARGS "/proc/cpuinfo" OUTPUT_VARIABLE CPUINFO)
 
-    target_compile_definitions(CaliperFactory PRIVATE _AUTO)
-    target_link_libraries(CaliperFactory caliper)
+        STRING(REGEX REPLACE "^.*(avx).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        STRING(COMPARE EQUAL "avx" "${CPU_FLAG_REGEX}" AVX_TRUE)
+        if (AVX_TRUE)
+            set(REGISTER_WIDTH "128")
+        endif()
 
-elseif ("${REGISTER_WIDTH}" MATCHES "128")
+        STRING(REGEX REPLACE "^.*(avx2).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        STRING(COMPARE EQUAL "avx2" "${CPU_FLAG_REGEX}" AVX2_TRUE)
+        if (AVX2_TRUE)
+            set(REGISTER_WIDTH "256")
+        endif()
+
+        STRING(REGEX REPLACE "^.*(avx5).*$" "\\1" CPU_FLAG_REGEX ${CPUINFO})
+        STRING(COMPARE EQUAL "avx5" "${CPU_FLAG_REGEX}" AVX5_TRUE)
+        if (AVX5_TRUE)
+            set(REGISTER_WIDTH "512")
+        endif()
+
+    elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+
+    endif()
+endif()
+
+message(STATUS "REGISTER_WIDTH set: ${REGISTER_WIDTH}")
+
+if ("${REGISTER_WIDTH}" MATCHES "128")
 
     add_library(caliper SHARED src/caliper_128.cpp src/caliper_128.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
