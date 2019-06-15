@@ -24,6 +24,7 @@ cmake-build-release/
 cmake-build-default/
 CMakeFiles/
 build/
+debug/
 
 # clangd
 compile_commands.json
