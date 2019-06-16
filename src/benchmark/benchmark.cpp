@@ -11,7 +11,6 @@ Benchmark::Benchmark(unsigned long size, unsigned long n_tests)
 
 	Benchmark::size = size;
 	Benchmark::n_tests = n_tests;
-         ;
 	Benchmark::x = (double*) _mm_malloc(32, Benchmark::size * sizeof(double));
 	Benchmark::y = (double*) _mm_malloc(32, Benchmark::size * sizeof(double));
 

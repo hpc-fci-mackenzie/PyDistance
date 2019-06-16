@@ -31,8 +31,8 @@ testNoDifference(Caliper* caliper, string distance_measure)
 	double *p = (double *) aligned_alloc(32, vec_len * sizeof(double));
 	double *q = (double *) aligned_alloc(32, vec_len * sizeof(double));
 
-    // double p[] = {1.0, 2.0, 3.0, 4.0};
-    // double q[] = {1.0, 2.0, 3.0, 4.0};
+    for(int i=0; i < vec_len; i++)
+        p[i] = i;
 
     std::cout << std::string(20, '-') << std::endl;
     printf("p = [");

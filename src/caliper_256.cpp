@@ -56,8 +56,8 @@ double
 Caliper256::cosine(const double *p, const double *q, unsigned long n)
 {
 	__m256d top = _mm256_setzero_pd();
-	__m256d  left = _mm256_setzero_pd();
-	__m256d  right = _mm256_setzero_pd();
+	__m256d left = _mm256_setzero_pd();
+	__m256d right = _mm256_setzero_pd();
 
 	for (; n > 3; n -= 4)
 	{
