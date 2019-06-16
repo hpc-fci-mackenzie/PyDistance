@@ -18,14 +18,11 @@ Caliper256::euclidean(const double *p, const double *q, unsigned long n)
 	}
 
 	result = Caliper256::_mm256_rdcsd_f64(euclidean);
-	if (n)
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			const double num = q[i] - p[i];
-			result += num * num;
-		}
-	}
+    for (int i = 0; i < n; ++i)
+    {
+        const double num = q[i] - p[i];
+        result += num * num;
+    }
 	return sqrt(result);
 }
 
@@ -47,14 +44,11 @@ Caliper256::manhattan(const double *p, const double *q, unsigned long n)
 	}
 
 	result = Caliper256::_mm256_rdcsd_f64(manhattan);
-	if (n)
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			const double num = fabs(p[i] - q[i]);
-			result += num;
-		}
-	}
+    for (int i = 0; i < n; ++i)
+    {
+        const double num = fabs(p[i] - q[i]);
+        result += num;
+    }
 	return result;
 }
 
@@ -84,21 +78,18 @@ Caliper256::cosine(const double *p, const double *q, unsigned long n)
 	double double_left = Caliper256::_mm256_rdcsd_f64(left);
 	double double_right = Caliper256::_mm256_rdcsd_f64(right);
 
-	if (n)
-	{
-		for (int i = 0; i < n; ++i)
-		{
-			const double a = p[i] * q[i];
-			const __m128d top_leftover = _mm_loadl_pd(empty, &a);
-			const __m256d top_leftover_256 = _mm256_castpd128_pd256(top_leftover);
-			top = _mm256_add_pd(top, top_leftover_256);
+    for (int i = 0; i < n; ++i)
+    {
+        const double a = p[i] * q[i];
+        const __m128d top_leftover = _mm_loadl_pd(empty, &a);
+        const __m256d top_leftover_256 = _mm256_castpd128_pd256(top_leftover);
+        top = _mm256_add_pd(top, top_leftover_256);
 
-			const double b = p[i] * p[i];
-			double_left+= b;
-			const double c = q[i] * q[i];
-			double_right+= c;
-		}
-	}
+        const double b = p[i] * p[i];
+        double_left+= b;
+        const double c = q[i] * q[i];
+        double_right+= c;
+    }
 
 	__m128d load_pd = _mm_loadl_pd(empty, &double_left);
 	load_pd = _mm_loadh_pd(load_pd, &double_right);
