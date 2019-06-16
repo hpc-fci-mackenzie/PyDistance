@@ -98,7 +98,7 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
         }
     }
 
-    __m256d load_pd = _mm256_loadu_pd(&double_left);
+    __m256d load_pd = _mm256_load_pd(&double_left);
     // load_pd = _mm256_loadu_epi32_pd(load_pd, &double_right);
     const __m256d sqrt_left_right = _mm256_sqrt_pd(load_pd);
 
