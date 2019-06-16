@@ -1,12 +1,18 @@
 #include "benchmark.hpp"
 
+#if defined(__INTEL_COMPILER)
+#include <malloc.h>
+#else
+#include <mm_malloc.h>
+#endif // defined(__GNUC__)
+
 Benchmark::Benchmark(unsigned long size, unsigned long n_tests)
 {
 
 	Benchmark::size = size;
 	Benchmark::n_tests = n_tests;
-	Benchmark::x = (double *) aligned_alloc(32, Benchmark::size * sizeof(double));
-	Benchmark::y = (double *) aligned_alloc(32, Benchmark::size * sizeof(double));
+	Benchmark::x = (double*) _mm_malloc(32, Benchmark::size * sizeof(double));
+	Benchmark::y = (double*) _mm_malloc(32, Benchmark::size * sizeof(double));
 
 	fill_vector(Benchmark::x, Benchmark::y, Benchmark::size);
 }
