@@ -30,7 +30,7 @@ debug/
 compile_commands.json
 
 # gdb
-.gdbhistory
+.gdb_history
 
 # Libraries and objects binaries
 *.o
