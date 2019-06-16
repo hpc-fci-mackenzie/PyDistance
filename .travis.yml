@@ -3,15 +3,6 @@ language: cpp
 compiler:
   - gcc
 
-sudo: yes
-dist: trusty
-before_install:
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-install: 
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-
 matrix:
 
   fast_finish: true
@@ -21,26 +12,6 @@ matrix:
     - os: windows
 
   include:
-
-    - os: linux
-      env: REGISTER_WIDTH=auto
-      script: 
-        - mkdir build 
-        - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
-        - make -j 2
-        - ./bin/test_bin
-
-    - os: osx
-      env: REGISTER_WIDTH=auto
-      before_install:
-        - brew install gcc && CC=gcc-6 && CXX=g++-6
-      script: 
-        - mkdir build 
-        - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
-        - make -j 2
-        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=auto
@@ -60,9 +31,19 @@ matrix:
         - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
         - make -j 2
         - ./bin/test_bin
+      sudo: yes
+      dist: trusty
+      before_install:
+        - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        - sudo apt-get update -qq
+      install: 
+        - sudo apt-get install -qq g++-7
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
     - os: osx
       env: REGISTER_WIDTH=128
+      before_install:
+        - brew install gcc && CC=gcc-6 && CXX=g++-6
       script: 
         - mkdir build 
         - cd build
@@ -87,8 +68,8 @@ matrix:
         - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         - sudo apt-get update -qq
       install: 
-        - sudo apt-get install -qq g++-6
-        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+        - sudo apt-get install -qq g++-7
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
       script: 
         - mkdir build 
         - cd build
@@ -107,6 +88,14 @@ matrix:
 
     - os: linux
       env: REGISTER_WIDTH=512
+      sudo: yes
+      dist: trusty
+      before_install:
+        - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        - sudo apt-get update -qq
+      install: 
+        - sudo apt-get install -qq g++-7
+        - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
     - os: osx
       env: REGISTER_WIDTH=512
