@@ -13,11 +13,6 @@ public:
 	manhattan(const double *p, const double *q, unsigned long n) override;
 	double
 	cosine(const double *p, const double *q, unsigned long n) override;
-private:
-	inline __m512d
-	_mm512_abs_pd(__m512d a);
-	inline double
-	_mm512_rdcsd_f64(__m512d a);
 };
 
 #endif

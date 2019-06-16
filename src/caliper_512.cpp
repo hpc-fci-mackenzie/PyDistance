@@ -17,7 +17,7 @@ Caliper512::euclidean(const double *p, const double *q, unsigned long n)
         q += 8;
     }
 
-    result = Caliper512::_mm512_rdcsd_f64(euclidean);
+    result = _mm512_reduce_add_pd(euclidean);
     if (n)
     {
         for (int i = 0; i < n; ++i)
@@ -40,13 +40,13 @@ Caliper512::manhattan(const double *p, const double *q, unsigned long n)
         const __m512d a = _mm512_load_pd(p);
         const __m512d b = _mm512_load_pd(q);
         const __m512d sub = _mm512_sub_pd(b, a);
-        const __m512d abs = Caliper512::_mm512_abs_pd(sub);
+        const __m512d abs = _mm512_abs_pd(sub);
         manhattan = _mm512_add_pd(manhattan, abs);
         p += 8;
         q += 8;
     }
 
-    result = Caliper512::_mm512_rdcsd_f64(manhattan);
+    result = _mm512_reduce_add_pd(manhattan);
     if (n)
     {
         for (int i = 0; i < n; ++i)
@@ -81,8 +81,8 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
     }
 
     const __m256d empty = _mm256_setzero_pd();
-    double double_left = Caliper512::_mm512_rdcsd_f64(left);
-    double double_right = Caliper512::_mm512_rdcsd_f64(right);
+    double double_left = _mm512_reduce_add_pd(left);
+    double double_right = _mm512_reduce_add_pd(right);
 
     if (n)
     {
@@ -98,9 +98,9 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
         }
     }
 
-    /* __m512d load_pd = _mm512_load_pd(empty, &double_left); */
-    /* load_pd = _mm_loadh_pd(load_pd, &double_right); */
-    /* const __m256d sqrt_left_right = _mm_sqrt_pd(load_pd); */
+    __m256d load_pd = _mm256_loadu_pd(&double_left);
+    // load_pd = _mm256_loadu_epi32_pd(load_pd, &double_right);
+    const __m256d sqrt_left_right = _mm256_sqrt_pd(load_pd);
 
     /* const __m256d sqrt_right_left = _mm_shuffle_pd(sqrt_left_right, sqrt_left_right, 1); */
     /* const __m256d bottom = _mm_mul_pd(sqrt_left_right, sqrt_right_left); */
@@ -116,21 +116,5 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
     /* const __m256d shuffle = _mm_shuffle_pd(cosine, cosine, 1); */
     /* const __m256d sum = _mm_add_pd(cosine, shuffle); */
     /* return _mm_cvtsd_f64(sum); */
-    return 2.;
-}
-
-__m512d
-Caliper512::_mm512_abs_pd(__m512d a)
-{
-    static const __m512d sign_mask = _mm512_set1_pd(-0.);
-    return a; //_mm512_andnot_pd(sign_mask, a);
-}
-
-double
-Caliper512::_mm512_rdcsd_f64(__m512d a)
-{
-    __m512d sum_lane = _mm512_add_pd(a, a);
-    /* __m512d permute_lane = _mm512_permute2f256_pd(sum_lane, sum_lane, 1); */
-    /* __m512d accumulator = _mm512_add_pd(sum_lane, permute_lane); */
-    /* return _mm512_cvtsd_f64(accumulator); */
+    return 0.;
 }
