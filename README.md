@@ -30,7 +30,7 @@ $ make
 $ cd lib
 ```
 
-## Features
+<!-- ## Features -->
 
 ## Usage
 
@@ -40,3 +40,6 @@ $ python main.py
 ```
 
 ## Contributing
+PyDistance is a research project and for now, we are a small team! 
+We actively encourage and support contributions. 
+The source code is released under the GNU License.
