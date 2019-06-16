@@ -24,7 +24,6 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=auto
-      osx_image: xcode10
       before_install:
         - brew install gcc && CC=gcc-6 && CXX=g++-6
       script: 
