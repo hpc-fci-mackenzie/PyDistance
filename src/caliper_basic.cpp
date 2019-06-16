@@ -40,5 +40,5 @@ CaliperBasic::cosine(const double *p, const double *q, unsigned long n)
         right += c;
     }
     const double bottom = sqrt(left) * sqrt(right);
-    return 1 - (top / bottom);
+    return 1 - top / bottom;
 }
