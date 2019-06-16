@@ -117,7 +117,7 @@ Caliper256::cosine(const double *p, const double *q, unsigned long n)
 	const __m128d cosine = _mm_div_pd(top_128, bottom);
 	const __m128d shuffle = _mm_shuffle_pd(cosine, cosine, 1);
 	const __m128d sum = _mm_add_pd(cosine, shuffle);
-	return _mm_cvtsd_f64(sum);
+	return 1 - _mm_cvtsd_f64(sum);
 }
 
 __m256d
