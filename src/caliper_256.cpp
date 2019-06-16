@@ -118,6 +118,9 @@ Caliper256::_mm256_abs_pd(__m256d a)
 	return _mm256_andnot_pd(sign_mask, a);
 }
 
+/**
+ * reduce single double
+ */
 double
 Caliper256::_mm256_rdcsd_f64(__m256d a)
 {

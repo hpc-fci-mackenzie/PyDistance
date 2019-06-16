@@ -111,6 +111,9 @@ Caliper128::_mm_abs_pd(__m128d a)
 	return _mm_andnot_pd(sign_mask, a);
 }
 
+/**
+ * reduce single double
+ */
 double
 Caliper128::_mm_rdcsd_f64(__m128d a)
 {
