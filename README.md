@@ -5,11 +5,13 @@
 | [Master](https://github.com/hpc-fci-mackenzie/PyDistance/) |[![master Branch Build Status](https://travis-ci.org/hpc-fci-mackenzie/PyDistance.svg?branch=master)](https://travis-ci.org/hpc-fci-mackenzie/PyDistance)|
 | [Dev](https://github.com/hpc-fci-mackenzie/PyDistance/tree/dev)    |[![dev Branch Build Status](https://travis-ci.org/hpc-fci-mackenzie/PyDistance.svg?branch=dev)](https://travis-ci.org/hpc-fci-mackenzie/PyDistance)|
 
+[![](https://img.shields.io/badge/Made%20with-C++-pink.svg?style=flat)]()
+
 PyDistance is a set of distance measure implementations optimized for a variety of processors with SIMD support written in C++, able to be used from Python.
 
 ## Requirements
 
-`CMake` >= 3.10j
+`CMake` >= 3.10
 
 ## Supported AVX Instruction Sets
 

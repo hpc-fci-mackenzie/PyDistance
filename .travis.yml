@@ -56,7 +56,7 @@ matrix:
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DPYTHON_INCLUDE_DIRS=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
         - make
         - ./bin/test_bin
 
