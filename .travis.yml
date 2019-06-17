@@ -51,7 +51,7 @@ matrix:
       env: REGISTER_WIDTH=128
       install: 
         - choco install make python 
-        - choco install cmake.install --version 3.10.0
+        - choco install cmake.install --allow-downgrade --version 3.10.0
         - choco upgrade mingw make -y
       script: 
         - mkdir build 
