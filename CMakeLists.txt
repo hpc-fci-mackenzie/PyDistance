@@ -78,7 +78,7 @@ if ("${REGISTER_WIDTH}" MATCHES "auto")
             set(REGISTER_WIDTH "512")
         endif()
 
-    elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    # elseif(CMAKE_SYSTEM_NAME MATCHES "Windows")
 
     else()
 
@@ -134,6 +134,11 @@ endif()
 ##########################
 ### PYTHON INTEGRATION ###
 ##########################
+
+if(WIN32)
+    find_path(PYH_PATH Python.h)
+    include_directory(${PYH_PATH})
+endif()
 
 # Create the Caliper.so artifact
 add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)

@@ -101,7 +101,7 @@ Caliper128::cosine(const double *p, const double *q, unsigned long n)
 	const __m128d bottom = _mm_mul_pd(sqrt_left_right, sqrt_right_left);
 
 	const __m128d cosine = _mm_div_pd(top, bottom);
-	return _mm_rdcsd_f64(cosine);
+	return 1 - _mm_rdcsd_f64(cosine);
 }
 
 __m128d

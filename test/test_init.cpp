@@ -37,7 +37,7 @@ testNoDifference(Caliper* caliper, string distance_measure)
 	double *q = (double *) _mm_malloc(32, vec_len * sizeof(double));
 
     for(int i=0; i < vec_len; i++)
-        p[i] = i;
+        p[i] = q[i] = i;
 
     std::cout << std::string(20, '-') << std::endl;
     printf("p = [");
