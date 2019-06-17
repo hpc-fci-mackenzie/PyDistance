@@ -42,8 +42,6 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=128
-      before_install:
-        - brew install gcc && CC=gcc-6 && CXX=g++-6
       script: 
         - mkdir build 
         - cd build
@@ -82,6 +80,12 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=256
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=256
@@ -99,6 +103,12 @@ matrix:
 
     - os: osx
       env: REGISTER_WIDTH=512
+      script: 
+        - mkdir build 
+        - cd build
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - make -j 2
+        - ./bin/test_bin
 
     - os: windows
       env: REGISTER_WIDTH=512
