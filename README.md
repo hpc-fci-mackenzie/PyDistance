@@ -9,7 +9,7 @@ PyDistance is a set of distance measure implementations optimized for a variety 
 
 ## Requirements
 
-`CMake` >= 3.8
+`CMake` >= 3.10j
 
 ## Supported AVX Instruction Sets
 

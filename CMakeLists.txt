@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.10)
 set(CMAKE_BUILD_TYPE Release)
+include(CheckSymbolExists)
 project(PyDistance)
 
 # For development, only,
@@ -28,12 +29,19 @@ set(CMAKE_SHARED_LIBRARY_PREFIX "")
 # Set the ".so" suffix in all library objects
 set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
 
-### Flags
+### Base Flags
 set(CXXFLAGS_O0 "-O0")
 set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone -fopenacc")
-set(CXXFLAGS_SSE2 "-O3 -march=native -fopenacc")
-set(CXXFLAGS_AVX2 "-O3 -march=native -fopenacc -mavx2")
-set(CXXFLAGS_AVX5 "-O3 -march=native -fopenacc -mavx512f -mavx512cd")
+set(CXXFLAGS_SSE2 "-O3 -march=native")
+set(CXXFLAGS_AVX2 "-O3 -march=native -mavx2")
+set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512cd")
+
+### OpenACC
+include(${CMAKE_ROOT}/Modules/FindOpenACC.cmake)
+if(OpenACC_CXX_FOUND)
+    message("Found OpenACC ${OpenACC_CXX_VERSION}: added ${OpenACC_CXX_FLAGS} flag")
+    set(CXXFLAGS_SSE2 "${CXX_FLAGS_SSE2} ${OpenACC_CXX_FLAGS}")
+endif()
 
 ### Output
 # Set the output directory for the .so file
