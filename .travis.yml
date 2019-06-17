@@ -40,7 +40,7 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=128
-      install: choco install make python
+      install: choco install make python3
       script: 
         - mkdir build 
         - cd build

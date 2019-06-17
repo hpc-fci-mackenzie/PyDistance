@@ -136,7 +136,7 @@ endif()
 ##########################
 
 if(WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython3.7")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython37")
     # find_path(PYTHON_INCLUDE_DIR Python.h)
 endif()
 
