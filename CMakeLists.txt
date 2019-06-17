@@ -145,7 +145,7 @@ endif()
 
 if(WIN32)
     find_path(PYH_PATH Python.h)
-    include_directories(${PYH_PATH})
+    # include_directories(${PYH_PATH})
 endif()
 
 # Create the Caliper.so artifact
