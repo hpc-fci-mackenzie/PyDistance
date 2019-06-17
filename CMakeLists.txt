@@ -136,7 +136,7 @@ endif()
 ##########################
 
 if(WIN32)
-    add_compile_options(RELEASE "-lpython37") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython37")
 endif()
 
 # Create the Caliper.so artifact
