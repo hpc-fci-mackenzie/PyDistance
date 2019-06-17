@@ -43,7 +43,7 @@ matrix:
     - name: windows X 128
       os: windows
       env: REGISTER_WIDTH=128
-    - install: choco install make python ; choco upgrade mingw make -y
+      install: choco install make python ; choco upgrade mingw make -y
       script: 
         - mkdir build 
         - cd build

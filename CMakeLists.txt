@@ -30,10 +30,10 @@ set(CMAKE_SHARED_LIBRARY_SUFFIX ".so")
 
 ### Flags
 set(CXXFLAGS_O0 "-O0")
-set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone")
-set(CXXFLAGS_SSE2 "-O3 -march=native")
-set(CXXFLAGS_AVX2 "-O3 -march=native -mavx2")
-set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512cd")
+set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone -fopenacc")
+set(CXXFLAGS_SSE2 "-O3 -march=native -fopenacc")
+set(CXXFLAGS_AVX2 "-O3 -march=native -fopenacc -mavx2")
+set(CXXFLAGS_AVX5 "-O3 -march=native -fopenacc -mavx512f -mavx512cd")
 
 ### Output
 # Set the output directory for the .so file
