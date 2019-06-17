@@ -75,9 +75,6 @@ matrix:
         - make -j 2
         - ./bin/test_bin
 
-    - os: linux
-      env: REGISTER_WIDTH=256
-
     - os: osx
       env: REGISTER_WIDTH=256
       script: 
