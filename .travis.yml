@@ -8,7 +8,6 @@ matrix:
   fast_finish: true
 
   allow_failures:
-    - os: osx
     - os: windows
 
   include:
@@ -41,11 +40,11 @@ matrix:
 
     - os: windows
       env: REGISTER_WIDTH=128
-      install: choco install make python anaconda3
+      install: choco install make python
       script: 
         - mkdir build 
         - cd build
-        - cmake .. /c/ProgramData/Anaconda3/python36.dll -DREGISTER_WIDTH=$REGISTER_WIDTH -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
+        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
         - make
         - ./bin/test_bin
 
