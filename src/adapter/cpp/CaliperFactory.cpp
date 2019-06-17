@@ -9,6 +9,9 @@
 #elif defined(_512)
 #include "../../caliper_512.hpp"
 #define METHOD Caliper512
+#elif defined(_OPENACC)
+#include "../../openacc/openacc.hpp"
+#define METHOD CaliperAccBasic 
 #else
 #include "../../caliper_basic.hpp"
 #define METHOD CaliperBasic
