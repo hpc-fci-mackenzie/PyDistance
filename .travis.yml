@@ -12,7 +12,8 @@ matrix:
 
   include:
 
-    - os: linux
+    - name: linux X 128
+      os: linux
       env: REGISTER_WIDTH=128
       script: 
         - mkdir build 
@@ -29,7 +30,8 @@ matrix:
         - sudo apt-get install -qq g++-7
         - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
-    - os: osx
+    - name: osx X 128
+      os: osx
       env: REGISTER_WIDTH=128
       script: 
         - mkdir build 
@@ -38,9 +40,11 @@ matrix:
         - make -j 2
         - ./bin/test_bin
 
-    - os: windows
+    - name: windows X 128
+      os: windows
       env: REGISTER_WIDTH=128
-      install: choco install make anaconda3
+    - install: choco install make python
+    - install: choco upgrade mingw make -y
       script: 
         - mkdir build 
         - cd build
@@ -48,7 +52,8 @@ matrix:
         - make
         - ./bin/test_bin
 
-    - os: linux
+    - name: linux X 256
+      os: linux
       env: REGISTER_WIDTH=256
       sudo: yes
       dist: trusty
@@ -65,7 +70,8 @@ matrix:
         - make -j 2
         - ./bin/test_bin
 
-    - os: osx
+    - name: osx X 256
+      os: osx
       env: REGISTER_WIDTH=256
       script: 
         - mkdir build 
@@ -74,10 +80,12 @@ matrix:
         - make -j 2
         - ./bin/test_bin
 
-    - os: windows
+    - name: windows X 256
+      os: windows
       env: REGISTER_WIDTH=256
 
-    - os: linux
+    - name: linux X 512
+      os: linux
       env: REGISTER_WIDTH=512
       sudo: yes
       dist: trusty
@@ -88,7 +96,8 @@ matrix:
         - sudo apt-get install -qq g++-7
         - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
 
-    - os: osx
+    - name: osx X 512
+      os: osx
       env: REGISTER_WIDTH=512
       script: 
         - mkdir build 
@@ -96,7 +105,8 @@ matrix:
         - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
         - make -j 2
 
-    - os: windows
+    - name: windows X 512
+      os: windows
       env: REGISTER_WIDTH=512
 
 script: 

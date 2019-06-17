@@ -136,8 +136,8 @@ endif()
 ##########################
 
 if(WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython37")
-    # find_path(PYTHON_INCLUDE_DIR Python.h)
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython37")
+    find_path(PY_PATH Python.h)
 endif()
 
 # Create the Caliper.so artifact
