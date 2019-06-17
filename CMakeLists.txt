@@ -135,9 +135,12 @@ endif()
 ### PYTHON INTEGRATION ###
 ##########################
 
-# if(WIN32)
+if(WIN32)
 #     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpython37")
-# endif()
+    # find_path(PYTHON_INCLUDE_DIR Python.h)
+
+
+endif()
 
 # Create the Caliper.so artifact
 add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)

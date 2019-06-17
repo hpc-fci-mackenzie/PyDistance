@@ -45,7 +45,7 @@ matrix:
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
+        - cmake .. /c/ProgramData/Anaconda3/python36.dll -DREGISTER_WIDTH=$REGISTER_WIDTH -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
         - make
         - ./bin/test_bin
 
