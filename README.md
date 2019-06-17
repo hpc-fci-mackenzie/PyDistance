@@ -50,10 +50,8 @@ array([1, 3, 3, 4, 1, 4, 3, 6])
 ```
 
 ## Platforms
-|![alt text](https://img.icons8.com/ios/24/000000/linux.png)|
+|![alt text](https://img.icons8.com/ios/24/000000/linux.png)|![alt text](https://img.icons8.com/material/24/000000/mac-os.png)|![alt text](https://img.icons8.com/material/24/000000/windows-logo.png)|
 |-|
-|![alt text](https://img.icons8.com/material/24/000000/mac-os.png)|
-|![alt text](https://img.icons8.com/material/24/000000/windows-logo.png)|
 
 ## Contributing
 PyDistance is a research project and for now, we are a small team! 
