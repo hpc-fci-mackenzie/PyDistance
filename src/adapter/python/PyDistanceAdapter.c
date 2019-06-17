@@ -132,6 +132,8 @@ calculate_sequence_wrapper(PyObject *self, PyObject *args)
 static PyMethodDef module_methods_list[] =
 	{
 		{"euclidean", (PyCFunction) calculate_sequence_wrapper, METH_VARARGS, NULL},
+		{"manhattan", (PyCFunction) calculate_sequence_wrapper, METH_VARARGS, NULL},
+		{"cosine",    (PyCFunction) calculate_sequence_wrapper, METH_VARARGS, NULL},
 		{NULL, NULL, 0, NULL} /* sentinel */
 	};
 

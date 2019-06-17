@@ -1,16 +1,16 @@
-#ifndef DISTANCE_MEASURE_HPP
-#define DISTANCE_MEASURE_HPP
+#ifndef CALIPER_HPP
+#define CALIPER_HPP
 
 #include <typeinfo>
 #include <cmath>
 #include <cctype>
 
-class DistanceMeasure
+class Caliper
 {
 public:
-	DistanceMeasure() = default;
+	Caliper() = default;
 
-	virtual ~DistanceMeasure() = default;
+	virtual ~Caliper() = default;
 
 	virtual double
 	euclidean(const double *p, const double *q, unsigned long n) = 0;

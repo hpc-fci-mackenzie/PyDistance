@@ -1,7 +1,7 @@
-#include "__m128d__distance.hpp"
+#include "caliper_128.hpp"
 
 double
-__m128d__Distance::euclidean(const double *p, const double *q, unsigned long n)
+Caliper128::euclidean(const double *p, const double *q, unsigned long n)
 {
 	double result = 0;
 	__m128d euclidean = _mm_setzero_pd();
@@ -17,7 +17,7 @@ __m128d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 		q += 2;
 	}
 
-	result = __m128d__Distance::_mm_rdcsd_f64(euclidean);
+	result = Caliper128::_mm_rdcsd_f64(euclidean);
 	if (n)
 	{
 		double num = p[0] - q[0];
@@ -27,7 +27,7 @@ __m128d__Distance::euclidean(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m128d__Distance::manhattan(const double *p, const double *q, unsigned long n)
+Caliper128::manhattan(const double *p, const double *q, unsigned long n)
 {
 	double result = 0;
 	__m128d manhattan = _mm_setzero_pd();
@@ -37,13 +37,13 @@ __m128d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 		const __m128d a = _mm_load_pd(p);
 		const __m128d b = _mm_load_pd(q);
 		const __m128d sub = _mm_sub_pd(b, a);
-		__m128d abs = __m128d__Distance::_mm_abs_pd(sub);
+		__m128d abs = Caliper128::_mm_abs_pd(sub);
 		manhattan = _mm_add_pd(manhattan, abs);
 		p += 2;
 		q += 2;
 	}
 
-	result = __m128d__Distance::_mm_rdcsd_f64(manhattan);
+	result = Caliper128::_mm_rdcsd_f64(manhattan);
 	if (n)
 	{
 		const double num = fabs(p[0] - q[0]);
@@ -53,7 +53,7 @@ __m128d__Distance::manhattan(const double *p, const double *q, unsigned long n)
 }
 
 double
-__m128d__Distance::cosine(const double *p, const double *q, unsigned long n)
+Caliper128::cosine(const double *p, const double *q, unsigned long n)
 {
 	__m128d top = _mm_setzero_pd();
 	__m128d left = _mm_setzero_pd();
@@ -101,18 +101,21 @@ __m128d__Distance::cosine(const double *p, const double *q, unsigned long n)
 	const __m128d bottom = _mm_mul_pd(sqrt_left_right, sqrt_right_left);
 
 	const __m128d cosine = _mm_div_pd(top, bottom);
-	return __m128d__Distance::_mm_rdcsd_f64(cosine);
+	return 1 - _mm_rdcsd_f64(cosine);
 }
 
 __m128d
-__m128d__Distance::_mm_abs_pd(__m128d a)
+Caliper128::_mm_abs_pd(__m128d a)
 {
 	static const __m128d sign_mask = _mm_set1_pd(-0.);
 	return _mm_andnot_pd(sign_mask, a);
 }
 
+/**
+ * reduce single double
+ */
 double
-__m128d__Distance::_mm_rdcsd_f64(__m128d a)
+Caliper128::_mm_rdcsd_f64(__m128d a)
 {
 	const __m128d shuffle = _mm_shuffle_pd(a, a, 1);
 	const __m128d sum = _mm_add_pd(a, shuffle);

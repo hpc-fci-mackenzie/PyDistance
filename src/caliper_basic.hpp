@@ -1,9 +1,9 @@
-#ifndef BASELINE_DISTANCE_HPP
-#define BASELINE_DISTANCE_HPP
+#ifndef CALIPER_BASIC_HPP
+#define CALIPER_BASIC_HPP
 
-#include "distance_measure.hpp"
+#include "caliper.hpp"
 
-class BaselineDistance : public DistanceMeasure
+class CaliperBasic : public Caliper
 {
 public:
 	double
@@ -14,4 +14,4 @@ public:
 	cosine(const double *p, const double *q, unsigned long n) override;
 };
 
-#endif //BASELINE_DISTANCE_HPP
+#endif

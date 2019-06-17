@@ -2,7 +2,7 @@
 #define C_DISTANCE_H
 
 #include "Distance_C_Adapter.hpp"
-#include <stddef.h>
+#include <cstddef>
 
 double
 calculate(const double *, const double *, unsigned long);
