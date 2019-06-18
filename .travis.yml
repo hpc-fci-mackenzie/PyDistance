@@ -14,11 +14,11 @@ matrix:
 
     - name: linux X 128
       os: linux
-      env: REGISTER_WIDTH=128
+      env: SIMD_WIDTH=128
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
         - make -j 2
         - ./bin/test_bin
       sudo: yes
@@ -38,17 +38,17 @@ matrix:
 
     - name: osx X 128
       os: osx
-      env: REGISTER_WIDTH=128
+      env: SIMD_WIDTH=128
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
         - make -j 2
         - ./bin/test_bin
 
     - name: windows X 128
       os: windows
-      env: REGISTER_WIDTH=128
+      env: SIMD_WIDTH=128
       install: 
         - choco install make python 
         - choco install cmake.install --allow-downgrade --version 3.10.0
@@ -56,13 +56,13 @@ matrix:
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH -DCMAKE_WINDOWS_EXPORT_ALL_SYMBOLS=TRUE -DPYTHON_INCLUDE_DIR=C:/Python37/include -DPYTHON_LIBRARY=C:/Python37/libs -G "Unix Makefiles"
         - make
         - ./bin/test_bin
 
     - name: linux X 256
       os: linux
-      env: REGISTER_WIDTH=256
+      env: SIMD_WIDTH=256
       sudo: yes
       dist: trusty
       before_install:
@@ -86,27 +86,27 @@ matrix:
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
         - make -j 2
         - ./bin/test_bin
 
     - name: osx X 256
       os: osx
-      env: REGISTER_WIDTH=256
+      env: SIMD_WIDTH=256
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
         - make -j 2
         - ./bin/test_bin
 
     - name: windows X 256
       os: windows
-      env: REGISTER_WIDTH=256
+      env: SIMD_WIDTH=256
 
     - name: linux X 512
       os: linux
-      env: REGISTER_WIDTH=512
+      env: SIMD_WIDTH=512
       sudo: yes
       dist: trusty
       before_install:
@@ -124,19 +124,19 @@ matrix:
 
     - name: osx X 512
       os: osx
-      env: REGISTER_WIDTH=512
+      env: SIMD_WIDTH=512
       script: 
         - mkdir build 
         - cd build
-        - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+        - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
         - make -j 2
 
     - name: windows X 512
       os: windows
-      env: REGISTER_WIDTH=512
+      env: SIMD_WIDTH=512
 
 script: 
   - mkdir build 
   - cd build
-  - cmake .. -DREGISTER_WIDTH=$REGISTER_WIDTH
+  - cmake .. -DSIMD_WIDTH=$SIMD_WIDTH
   - make -j 2
