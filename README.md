@@ -8,7 +8,7 @@ PyDistance is a set of distance measure implementations optimized for a variety 
 
 ## Supported AVX Instruction Sets
 
-| AVX Instruction Set |REGISTER_WIDTH option|
+| AVX Instruction Set |SIMD_WIDTH option|
 |--------|------------|
 |Auto Vectorization |auto|
 |AVX-128 |128|
@@ -17,12 +17,12 @@ PyDistance is a set of distance measure implementations optimized for a variety 
 
 ## Building
 
-The setting `REGISTER_WIDTH` may be specified to take full advantage of the target architecture, as follows:
+The setting `SIMD_WIDTH` may be specified to take full advantage of the target architecture, as follows:
 
 ``` bash
 $ mkdir build 
 $ cd build
-$ cmake .. [-D REGISTER_WIDTH=<auto|128|256|512>]
+$ cmake .. [-D SIMD_WIDTH=<auto|128|256|512>]
 $ make
 $ cd lib
 ```
