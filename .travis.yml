@@ -50,8 +50,8 @@ matrix:
       os: windows
       env: REGISTER_WIDTH=128
       install: 
-        - choco install make python 
-        - choco install cmake.install --allow-downgrade --version 3.10.0
+        - choco install make python -y
+        - choco install cmake --version 3.10.0 --allow-downgrade --installargs 'ADD_CMAKE_TO_PATH=System' -y
         - choco upgrade mingw make -y
       script: 
         - mkdir build 

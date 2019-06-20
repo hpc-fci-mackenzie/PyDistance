@@ -143,10 +143,10 @@ endif()
 ### PYTHON INTEGRATION ###
 ##########################
 
-if(WIN32)
-    find_path(PYH_PATH Python.h)
+# if(WIN32)
+    # find_path(PYH_PATH Python.h)
     # include_directories(${PYH_PATH})
-endif()
+# endif()
 
 # Create the Caliper.so artifact
 add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)
