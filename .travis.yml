@@ -51,7 +51,7 @@ matrix:
       env: SIMD_WIDTH=128
       install: 
         - choco install make windows-sdk-8.1 python -y
-        - choco install cmake.install --version 3.10.0 --allow-downgrade --installargs 'ADD_CMAKE_TO_PATH=System' -y
+        # - choco install cmake.install --version 3.10.0 --allow-downgrade --installargs 'ADD_CMAKE_TO_PATH=System' -y
         - choco upgrade mingw make -y
       script: 
         - mkdir build 
