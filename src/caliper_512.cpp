@@ -118,3 +118,10 @@ Caliper512::cosine(const double *p, const double *q, unsigned long n)
     /* return _mm_cvtsd_f64(sum); */
     return 0.;
 }
+
+__m512d
+Caliper512::_mm512_abs_pd(__m512d a)
+{
+	static const __m512d sign_mask = _mm512_set1_pd(-0.);
+	return _mm512_andnot_pd(sign_mask, a);
+}
