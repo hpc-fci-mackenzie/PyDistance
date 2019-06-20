@@ -152,7 +152,7 @@ endif()
 add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)
 
 # Set the Python version to default in the OS
-find_package(PythonLibs REQUIRED)
+find_package(PythonLibs 3.6 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
 # Link the Caliper lib with the CaliperFactory lib
