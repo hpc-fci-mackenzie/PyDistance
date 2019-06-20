@@ -158,7 +158,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 
 # Link the Caliper lib with the CaliperFactory lib
 if(WIN32)
-    target_link_libraries(PyDistance CaliperFactory "C:/Python/python3.dll")
+    target_link_libraries(PyDistance CaliperFactory "C:/Python/libs/python3.dll")
 else()
     target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
 endif()
