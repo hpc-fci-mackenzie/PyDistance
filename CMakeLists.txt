@@ -144,7 +144,6 @@ endif()
 ##########################
 
 # if(WIN32)
-#     
 #     # find_path(PYH_PATH Python.h)
 #     include_directories(${PYH_PATH})
 # endif()
@@ -155,13 +154,7 @@ add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)
 # Set the Python version to default in the OS
 find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
-
-# Link the Caliper lib with the CaliperFactory lib
-# if(WIN32)
-#     target_link_libraries(PyDistance CaliperFactory "C:/Python/libs/python3.dll")
-# else()
 target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
-# endif()
 
 #############
 ### DEBUG ###
