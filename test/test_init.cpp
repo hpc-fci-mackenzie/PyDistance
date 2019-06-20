@@ -5,6 +5,11 @@
 #define MANHATTAN "Manhattan"
 #define COSINE    "Cosine"
 
+#if defined(__INTEL_COMPILER)
+#include <malloc.h>
+#else
+#include <mm_malloc.h>
+#endif // defined(__GNUC__)
 
 using namespace std;
 
@@ -28,11 +33,11 @@ testNoDifference(Caliper* caliper, string distance_measure)
 {
 
     int vec_len = 4;
-	double *p = (double *) aligned_alloc(32, vec_len * sizeof(double));
-	double *q = (double *) aligned_alloc(32, vec_len * sizeof(double));
+	double *p = (double *) _mm_malloc(32, vec_len * sizeof(double));
+	double *q = (double *) _mm_malloc(32, vec_len * sizeof(double));
 
     for(int i=0; i < vec_len; i++)
-        p[i] = i;
+        p[i] = q[i] = i;
 
     std::cout << std::string(20, '-') << std::endl;
     printf("p = [");
