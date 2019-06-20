@@ -144,8 +144,9 @@ endif()
 ##########################
 
 # if(WIN32)
-    # find_path(PYH_PATH Python.h)
-    # include_directories(${PYH_PATH})
+#     
+#     # find_path(PYH_PATH Python.h)
+#     include_directories(${PYH_PATH})
 # endif()
 
 # Create the Caliper.so artifact
@@ -156,7 +157,11 @@ find_package(PythonLibs REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 
 # Link the Caliper lib with the CaliperFactory lib
-target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
+if(WIN32)
+    target_link_libraries(PyDistance CaliperFactory "C:/Python/python3.dll")
+else()
+    target_link_libraries(PyDistance CaliperFactory ${PYTHON_LIBRARIES})
+endif()
 
 #############
 ### DEBUG ###
