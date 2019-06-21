@@ -34,7 +34,7 @@ set(CXXFLAGS_O0 "-O0")
 set(CXXFLAGS_O2 "-O2 -finline-functions -funswitch-loops -fpredictive-commoning -fgcse-after-reload -fno-tree-loop-vectorize -ftree-loop-distribute-patterns -fsplit-paths -fno-tree-slp-vectorize -fno-vect-cost-model -ftree-partial-pre -fpeel-loops -fipa-cp-clone -fopenacc")
 set(CXXFLAGS_SSE2 "-O3 -march=native")
 set(CXXFLAGS_AVX2 "-O3 -march=native -mavx2")
-set(CXXFLAGS_AVX5 "-O3 -march=native -mavx512f -mavx512cd")
+set(CXXFLAGS_AVX5 "-O3 -march=skylakex-avx512 -mavx512f -mavx512cd")
 
 ### OpenACC
 include(${CMAKE_ROOT}/Modules/FindOpenACC.cmake)
@@ -119,13 +119,17 @@ elseif ("${SIMD_WIDTH}" MATCHES "512")
             message(FATAL_ERROR "GCC version must be at least 7.0!")
         endif()
     endif()
+    # if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+    #     set(CXXFLAGS_AVX5 "-O3 -march=skylakex-avx512 -mavx512f -mavx512cd")
+    #     -march=skylakex-avx512
+    # endif()
 
     add_library(caliper SHARED src/caliper_512.cpp src/caliper.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
     target_compile_definitions(CaliperFactory PRIVATE _512)
     target_link_libraries(CaliperFactory caliper)
 
-elseif("${SIMD_WIDTH}" MATCHES AUTO)
+elseif("${SIMD_WIDTH}" MATCHES "auto")
 
     add_library(caliper SHARED src/caliper_basic.cpp src/caliper_basic.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_SSE2})
@@ -142,11 +146,6 @@ endif()
 ##########################
 ### PYTHON INTEGRATION ###
 ##########################
-
-# if(WIN32)
-#     # find_path(PYH_PATH Python.h)
-#     include_directories(${PYH_PATH})
-# endif()
 
 # Create the Caliper.so artifact
 add_library(PyDistance SHARED src/adapter/cpp/CaliperAdapter.cpp)
