@@ -9,6 +9,7 @@ matrix:
 
   allow_failures:
     - os: windows
+    - name: linux X 512
 
   include:
 

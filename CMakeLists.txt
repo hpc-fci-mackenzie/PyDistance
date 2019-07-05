@@ -120,7 +120,7 @@ elseif ("${SIMD_WIDTH}" MATCHES "512")
         endif()
     endif()
     if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-        set(CXXFLAGS_AVX5 "-O3 -march=skylakex-avx512 -mavx512f -mavx512cd")
+        set(CXXFLAGS_AVX5 "-O3 -march=skylake -mavx512f -mavx512cd")
         # -march=skylakex-avx512
     endif()
 
