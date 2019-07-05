@@ -119,10 +119,9 @@ elseif ("${SIMD_WIDTH}" MATCHES "512")
             message(FATAL_ERROR "GCC version must be at least 7.0!")
         endif()
     endif()
-    if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-        set(CXXFLAGS_AVX5 "-O3 -march=skylake -mavx512f -mavx512cd")
-        # -march=skylakex-avx512
-    endif()
+    # if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    #     set(CXXFLAGS_AVX5 "-O3 -march=skylake -mavx512f -mavx512cd")
+    # endif()
 
     add_library(caliper SHARED src/caliper_512.cpp src/caliper.hpp src/caliper.hpp)
     set_property(TARGET caliper PROPERTY COMPILE_FLAGS ${CXXFLAGS_AVX5})
